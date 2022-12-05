@@ -1,3 +1,5 @@
+import './styles.css';
+
 import React, { useState } from 'react'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/material.css'
@@ -7,6 +9,16 @@ import 'codemirror/mode/css/css'
 import { Controlled as ControlledEditor } from 'react-codemirror2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons'
+
+import "codemirror/addon/hint/show-hint";
+import "codemirror/addon/hint/javascript-hint";
+import "codemirror/addon/hint/xml-hint";
+import "codemirror/addon/hint/html-hint";
+import "codemirror/addon/hint/show-hint.css";
+import "codemirror/addon/edit/closetag";
+import "codemirror/addon/edit/closebrackets";
+import "codemirror/addon/edit/matchbrackets";
+import "codemirror/addon/search/match-highlighter";
 
 export default function Editor(props) {
   const {
@@ -42,7 +54,15 @@ export default function Editor(props) {
           lint: true,
           mode: language,
           theme: 'material',
-          lineNumbers: true
+          lineNumbers: true,
+          // undoDepth: 2,
+          extraKeys: {
+            "Ctrl-Space": "autocomplete"
+          },
+          matchBrackets: true, //underline matching bracket
+          autoCloseBrackets: true, //auto-close any brackets
+          autoCloseTags: true, //auto-close html tags
+          highlightSelectionMatches: true, //highlights matching words
         }}
       />
     </div>

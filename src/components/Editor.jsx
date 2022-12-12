@@ -2,7 +2,6 @@ import './styles.css';
 
 import React, { useState } from 'react'
 import 'codemirror/lib/codemirror.css'
-import 'codemirror/theme/material.css'
 import 'codemirror/mode/xml/xml'
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/mode/css/css'
@@ -10,6 +9,16 @@ import { Controlled as ControlledEditor } from 'react-codemirror2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons'
 
+// Themes
+import 'codemirror/theme/material.css'
+import 'codemirror/theme/3024-day.css'
+import 'codemirror/theme/isotope.css'
+import 'codemirror/theme/duotone-light.css'
+import 'codemirror/theme/nord.css'
+import 'codemirror/theme/night.css'
+
+
+// Customizations
 import "codemirror/addon/hint/show-hint";
 import "codemirror/addon/hint/javascript-hint";
 import "codemirror/addon/hint/xml-hint";
@@ -25,14 +34,19 @@ export default function Editor(props) {
     language,
     displayName,
     value,
-    onChange
+    onChange,
+    theme
   } = props
   const [open, setOpen] = useState(true)
+
+  const savedTheme = theme
 
   function handleChange(editor, data, value) {
     onChange(value)
   }
 
+  console.log(`Editor.js Theme: ${theme}`)
+  
   return (
     <div className={`editor-container ${open ? '' : 'collapsed'}`}>
       <div className="editor-title">
@@ -50,20 +64,19 @@ export default function Editor(props) {
         value={value}
         className="code-mirror-wrapper"
         options={{
-          lineWrapping: true,
-          lint: true,
-          mode: language,
-          theme: 'material',
-          lineNumbers: true,
-          // undoDepth: 2,
-          extraKeys: {
-            "Ctrl-Space": "autocomplete"
-          },
-          matchBrackets: true, //underline matching bracket
-          autoCloseBrackets: true, //auto-close any brackets
-          autoCloseTags: true, //auto-close html tags
-          highlightSelectionMatches: true, //highlights matching words
-        }}
+            lineWrapping: true,
+            lint: true,
+            mode: language,
+            theme: savedTheme,
+            lineNumbers: true,
+            extraKeys: {
+              "Ctrl-Space": "autocomplete"
+            },
+            matchBrackets: true, //underline matching bracket
+            autoCloseBrackets: true, //auto-close any brackets
+            autoCloseTags: true, //auto-close html tags
+            highlightSelectionMatches: true, //highlights matching words
+          }}
       />
     </div>
   )
